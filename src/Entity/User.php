@@ -36,10 +36,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Ignore]
     private Collection $caixasDeAreia;
 
+    #[ORM\OneToMany(targetEntity: Evento::class, mappedBy: 'usuario', orphanRemoval: true)]
+    private Collection $eventos;
+
     public function __construct()
     {
         $this->gatos = new ArrayCollection();
         $this->caixasDeAreia = new ArrayCollection();
+        $this->eventos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -150,6 +154,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($caixasDeAreium->getUsuario() === $this) {
                 $caixasDeAreium->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Evento>
+     */
+    public function getEventos(): Collection
+    {
+        return $this->eventos;
+    }
+
+    public function addEvento(Evento $evento): static
+    {
+        if (!$this->eventos->contains($evento)) {
+            $this->eventos->add($evento);
+            $evento->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvento(Evento $evento): static
+    {
+        if ($this->eventos->removeElement($evento)) {
+            // set the owning side to null (unless already changed)
+            if ($evento->getUsuario() === $this) {
+                $evento->setUsuario(null);
             }
         }
 

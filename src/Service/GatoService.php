@@ -23,9 +23,7 @@ class GatoService {
     {
         $user = $this->userService->getLoggedUser();
         $gato->setDono($user);
-        $user->addGato($gato);
         $this->entityManager->persist($gato);
-        $this->entityManager->persist($user);
         $this->entityManager->flush();
         return $gato;
     } 
@@ -41,6 +39,7 @@ class GatoService {
         $user = $this->userService->getLoggedUser();
         $_gato = $this->entityManager->getRepository(Gato::class)->find($id);
         if(!$user->getGatos()->contains($_gato)){
+            //todo: throw a forbiden error
             return $_gato;
         }
 

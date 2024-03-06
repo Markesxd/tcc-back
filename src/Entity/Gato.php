@@ -32,6 +32,7 @@ class Gato
     private ?User $dono = null;
 
     #[ORM\ManyToMany(targetEntity: Evento::class, mappedBy: 'cats')]
+    #[Ignore]
     private Collection $eventos;
 
     public function __construct()
@@ -42,6 +43,13 @@ class Gato
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getNome(): ?string
@@ -104,7 +112,7 @@ class Gato
     {
         if (!$this->eventos->contains($evento)) {
             $this->eventos->add($evento);
-            $evento->addCat($this);
+            $evento->addGato($this);
         }
 
         return $this;
@@ -113,7 +121,7 @@ class Gato
     public function removeEvento(Evento $evento): static
     {
         if ($this->eventos->removeElement($evento)) {
-            $evento->removeCat($this);
+            $evento->removeGato($this);
         }
 
         return $this;

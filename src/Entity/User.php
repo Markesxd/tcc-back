@@ -37,6 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $caixasDeAreia;
 
     #[ORM\OneToMany(targetEntity: Evento::class, mappedBy: 'usuario', orphanRemoval: true)]
+    #[Ignore]
     private Collection $eventos;
 
     public function __construct()

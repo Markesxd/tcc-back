@@ -40,11 +40,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Ignore]
     private Collection $eventos;
 
+    #[ORM\OneToMany(targetEntity: PlanoAlimentar::class, mappedBy: 'usuario', orphanRemoval: true)]
+    #[Ignore]
+    private Collection $planosAlimentares;
+
     public function __construct()
     {
         $this->gatos = new ArrayCollection();
         $this->caixasDeAreia = new ArrayCollection();
         $this->eventos = new ArrayCollection();
+        $this->planosAlimentares = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,6 +190,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($evento->getUsuario() === $this) {
                 $evento->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlanoAlimentar>
+     */
+    public function getPlanosAlimentares(): Collection
+    {
+        return $this->planosAlimentares;
+    }
+
+    public function addPlanosAlimentare(PlanoAlimentar $planosAlimentare): static
+    {
+        if (!$this->planosAlimentares->contains($planosAlimentare)) {
+            $this->planosAlimentares->add($planosAlimentare);
+            $planosAlimentare->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanosAlimentare(PlanoAlimentar $planosAlimentare): static
+    {
+        if ($this->planosAlimentares->removeElement($planosAlimentare)) {
+            // set the owning side to null (unless already changed)
+            if ($planosAlimentare->getUsuario() === $this) {
+                $planosAlimentare->setUsuario(null);
             }
         }
 

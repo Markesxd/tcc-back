@@ -60,8 +60,8 @@ class EventoService {
             $_evento->setIntervaloDeRepeticao($evento->getIntervaloDeRepeticao());
         }
         if(!$evento->getGatos()->isEmpty()) {
-            $gatos = $evento->getGatos();
-            foreach($gatos as $gato) {
+            $_evento->getGatos()->clear();
+            foreach($evento->getGatos() as $gato) {
                 $_evento->removeGato($gato);
                 $gato = $this->entityManager->getRepository(Gato::class)->find($gato->getId());
                 $_evento->addGato($gato);

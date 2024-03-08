@@ -32,6 +32,12 @@ class GatoController extends AbstractController
         return $this->json($gatos);
     }
 
+    #[Route('/gato/{id}', name: 'find_gato', methods: ['GET'])]
+    public function find(Gato $gato): JsonResponse
+    {
+        return $this->json($gato);
+    }
+
     #[Route('/gato', name: 'create_gato', methods: ['POST'])]
     public function createGato(Request $request): JsonResponse
     {

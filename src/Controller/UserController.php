@@ -26,11 +26,11 @@ class UserController extends AbstractController
     }
 
     #[Route('/register', name: 'register_user')]
-    public function register(Request $request): JsonResponse
+    public function register(Request $request): Response
     {
         $user = $this->serializer->deserialize($request->getContent(), User::class, 'json');
         $this->userService->create($user);
-        return $this->json(
+        return new Response(
             '',
             Response::HTTP_CREATED,
             ['Location' => '/login']

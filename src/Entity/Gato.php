@@ -31,9 +31,13 @@ class Gato
     #[Ignore]
     private ?User $dono = null;
 
-    #[ORM\ManyToMany(targetEntity: Evento::class, mappedBy: 'cats')]
+    #[ORM\ManyToMany(targetEntity: Evento::class, mappedBy: 'gatos')]
     #[Ignore]
     private Collection $eventos;
+
+    #[ORM\ManyToOne(inversedBy: 'gatos')]
+    #[Ignore]
+    private ?PlanoAlimentar $planoAlimentar = null;
 
     public function __construct()
     {
@@ -123,6 +127,18 @@ class Gato
         if ($this->eventos->removeElement($evento)) {
             $evento->removeGato($this);
         }
+
+        return $this;
+    }
+
+    public function getPlanoAlimentar(): ?PlanoAlimentar
+    {
+        return $this->planoAlimentar;
+    }
+
+    public function setPlanoAlimentar(?PlanoAlimentar $planoAlimentar): static
+    {
+        $this->planoAlimentar = $planoAlimentar;
 
         return $this;
     }

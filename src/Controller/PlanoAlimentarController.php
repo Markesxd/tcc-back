@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PlanoAlimentar;
+use App\Entity\Refeicao;
 use App\Service\PlanoAlimentarService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -52,11 +53,22 @@ class PlanoAlimentarController extends AbstractController
         );
     }
 
+    #[Route('/plano-alimentar/servir', name: 'servir_refeicao', methods: ['PUT'])]
+    public function servir(Request $request): Response 
+    {
+        $refeicao = $this->serializer->deserialize($request->getContent(), Refeicao::class, 'json');
+        $this->planoAlimentarService->servir($refeicao);
+        return new Response(
+            null,
+            Response::HTTP_NO_CONTENT
+        );
+    }
+
     #[Route('plano-alimentar/{id}', name: 'update_plano_alimentar', methods: ['PUT'])]
     public function update(Request $request, int $id): JsonResponse
     {
         $planoAlimentar = $this->serializer->deserialize($request->getContent(), PlanoAlimentar::class, 'json');
-        $this->planoAlimentarService->update($planoAlimentar, $id);
+        $planoAlimentar = $this->planoAlimentarService->update($planoAlimentar, $id);
         return $this->json($planoAlimentar);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\RefeicaoRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
@@ -21,6 +22,12 @@ class Refeicao
     #[ORM\JoinColumn(nullable: false)]
     #[Ignore]
     private ?PlanoAlimentar $planoAlimentar = null;
+
+    #[ORM\OneToMany(targetEntity: RefeicaoLog::class, mappedBy: 'refeicao')]
+    #[Ignore]
+    private ?Collection $logs = null;
+
+    private bool $foiServida;
 
     public function getId(): ?int
     {
@@ -54,6 +61,40 @@ class Refeicao
     public function setPlanoAlimentar(?PlanoAlimentar $planoAlimentar): static
     {
         $this->planoAlimentar = $planoAlimentar;
+
+        return $this;
+    }
+
+    public function getLogs(): ?Collection
+    {
+        return $this->logs;
+    }
+
+    public function addLog(RefeicaoLog $log): static
+    {
+        if (!$this->logs->contains($log)) {
+            $this->logs->add($log);
+            $log->setRefeicao($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLog(RefeicaoLog $log): static
+    {
+        $this->logs->removeElement($log);
+
+        return $this;
+    }
+
+    public function getFoiServida(): bool
+    {
+        return $this->foiServida;
+    }
+
+    public function setFoiServida(bool $foiServida): static
+    {
+        $this->foiServida = $foiServida;
 
         return $this;
     }

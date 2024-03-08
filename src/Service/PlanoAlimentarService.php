@@ -5,6 +5,8 @@ namespace App\Service;
 use App\Entity\Gato;
 use App\Entity\PlanoAlimentar;
 use App\Entity\Refeicao;
+use App\Entity\RefeicaoLog;
+use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -24,7 +26,15 @@ class PlanoAlimentarService {
     public function list(): Collection
     {
         $user = $this->userService->getLoggedUser();
-        return $user->getPlanosAlimentares();
+        $planosAlimentares = $user->getPlanosAlimentares();
+        foreach($planosAlimentares as $planoAlimentar) {
+            foreach($planoAlimentar->getRefeicoes() as $refeicao) {
+                $refeicao->setFoiServida(
+                    $this->getRefeicaoTodaysLog($refeicao)->isFoiServida()
+                );
+            }
+        }
+        return $planosAlimentares;
     }
     
     public function create(PlanoAlimentar $planoAlimentar): PlanoAlimentar
@@ -75,5 +85,29 @@ class PlanoAlimentarService {
         }
         $this->entityManager->remove($planoAlimentar);
         $this->entityManager->flush();
+    }
+
+    public function servir(Refeicao $refeicao)
+    {
+        $_refeicao = $this->entityManager->getRepository(Refeicao::class)->find($refeicao->getId());
+        $todaysLog = $this->getRefeicaoTodaysLog($_refeicao);
+        $todaysLog->setFoiServida($refeicao->getFoiServida());
+        $this->entityManager->persist($todaysLog);
+        $this->entityManager->flush();
+    }
+
+    private function getRefeicaoTodaysLog(Refeicao $refeicao): RefeicaoLog
+    {
+        $todaysLog =  $this->entityManager->getRepository(RefeicaoLog::class)->findOneBy(
+            ['refeicao' => $refeicao, 'data' => (new DateTime())]
+        );
+        if(!$todaysLog) {
+            $todaysLog = new RefeicaoLog();
+            $todaysLog
+                ->setData(new DateTime())
+                ->setRefeicao($refeicao)
+                ->setFoiServida(false);
+        }
+        return $todaysLog;
     }
 }

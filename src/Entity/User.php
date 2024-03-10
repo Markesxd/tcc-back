@@ -17,12 +17,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Ignore]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
+    #[Ignore]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
@@ -93,11 +95,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    #[Ignore]
     public function getRoles(): array
     {
         return ["ROLE_USER"];
     }
     
+    #[Ignore]
     public function getUserIdentifier(): string
     {
         return $this->email;

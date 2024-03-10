@@ -37,10 +37,12 @@ class UserController extends AbstractController
         );
     }
 
-    #[Route('/user', name: 'list_user', methods: ['GET'])]
-    public function list(): JsonResponse
+    #[Route('/user', name: 'get_user', methods: ['GET'])]
+    public function get(): JsonResponse
     {
-        $users = $this->userService->list();
-        return $this->json($users);
+        $user = $this->userService->getLoggedUser();
+        return $this->json(
+            $user
+        );
     }
 }

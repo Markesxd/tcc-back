@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Gato;
 use App\Service\GatoService;
+use App\Util\DateUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,12 +30,16 @@ class GatoController extends AbstractController
     public function listGatos(): JsonResponse
     {
         $gatos = $this->gatoService->list();
+        foreach($gatos as $gato) {
+            DateUtil::convertDateToGMT($gato->getAniversario());
+        }
         return $this->json($gatos);
     }
 
     #[Route('/gato/{id}', name: 'find_gato', methods: ['GET'])]
     public function find(Gato $gato): JsonResponse
     {
+        DateUtil::convertDateToGMT($gato->getAniversario());
         return $this->json($gato);
     }
 

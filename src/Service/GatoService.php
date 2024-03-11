@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Gato;
+use App\Util\DateUtil;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -31,7 +32,7 @@ class GatoService {
     public function list(): Collection
     {
         $user = $this->userService->getLoggedUser();
-        return $user->getGatos(); 
+        return $user->getGatos();
     }
 
     public function update(Gato $gato, int $id): Gato

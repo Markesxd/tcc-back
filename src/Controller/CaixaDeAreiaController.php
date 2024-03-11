@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\CaixaDeAreia;
 use App\Service\CaixaDeAreiaService;
+use App\Util\DateUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,9 @@ class CaixaDeAreiaController extends AbstractController
     public function list(): JsonResponse
     {
         $caixasDeAreia = $this->caixaDeAreiaService->list(); 
+        foreach($caixasDeAreia as $caixaDeAreia) {
+            DateUtil::convertDateToGMT($caixaDeAreia->getLimpoEm());
+        }
         return $this->json(
             $caixasDeAreia
         );

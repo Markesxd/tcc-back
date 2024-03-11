@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Evento;
 use App\Service\EventoService;
+use App\Util\DateUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,9 @@ class EventoController extends AbstractController
     public function list(): JsonResponse
     {
         $eventos = $this->eventoService->list();
+        foreach($eventos as $evento) {
+            DateUtil::convertDateToGMT($evento->getData());
+        }
         return $this->json(
             $eventos
         );

@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Evento;
 use App\Entity\Gato;
+use App\Exception\ForbiddenException;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -46,8 +47,7 @@ class EventoService {
         $_evento = $this->entityManager->getRepository(Evento::class)->find($id);
         $user = $this->userService->getLoggedUser();
         if(!$user->getEventos()->contains($_evento)){
-            //todo: throw forbiden error
-            return $_evento;
+            throw new ForbiddenException();            
         }
 
         if($evento->getNome() !== null) {

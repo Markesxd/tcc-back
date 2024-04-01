@@ -6,6 +6,7 @@ use App\Entity\Gato;
 use App\Entity\PlanoAlimentar;
 use App\Entity\Refeicao;
 use App\Entity\RefeicaoLog;
+use App\Exception\ForbiddenException;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -57,8 +58,7 @@ class PlanoAlimentarService {
         $_planoAlimentar = $this->entityManager->getRepository(PlanoAlimentar::class)->find($id);
         $user = $this->userService->getLoggedUser();
         if(!$user->getPlanosAlimentares()->contains($_planoAlimentar)) {
-            //todo: throw forbiden error;
-            return $_planoAlimentar;
+            throw new ForbiddenException();
         }
 
         if($planoAlimentar->getNome() !== null) {

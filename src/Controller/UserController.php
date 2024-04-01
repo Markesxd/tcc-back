@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class UserController extends AbstractController
@@ -41,8 +42,14 @@ class UserController extends AbstractController
     public function get(): JsonResponse
     {
         $user = $this->userService->getLoggedUser();
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups('show')
+            ->toArray();
         return $this->json(
-            $user
+            $user,
+            200,
+            [],
+            $context
         );
     }
 }

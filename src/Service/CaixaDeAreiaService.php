@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\CaixaDeAreia;
+use App\Exception\ForbiddenException;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CaixaDeAreiaService {
@@ -38,8 +39,7 @@ class CaixaDeAreiaService {
         $user = $this->userService->getLoggedUser();
         $_caixaDeAreia = $this->entityManager->getRepository(CaixaDeAreia::class)->find($id);
         if(!$user->getCaixasDeAreia()->contains($_caixaDeAreia)) {
-            //todo: throw forbiden error
-            return $_caixaDeAreia;
+            throw new ForbiddenException();
         }
         
         if($caixaDeAreia->getNome() !== null) {

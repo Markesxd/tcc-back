@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Gato;
+use App\Exception\ForbiddenException;
 use App\Util\DateUtil;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -40,8 +41,7 @@ class GatoService {
         $user = $this->userService->getLoggedUser();
         $_gato = $this->entityManager->getRepository(Gato::class)->find($id);
         if(!$user->getGatos()->contains($_gato)){
-            //todo: throw a forbiden error
-            return $_gato;
+            throw new ForbiddenException();
         }
 
         if($gato->getNome() !== null) {

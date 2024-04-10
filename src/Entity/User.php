@@ -22,14 +22,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['show'])]
+    #[Groups(['get_user'])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['show'])]
+    #[Groups(['get_user'])]
     private ?string $email = null;
 
     #[ORM\OneToMany(targetEntity: Gato::class, mappedBy: 'dono', orphanRemoval: true)]

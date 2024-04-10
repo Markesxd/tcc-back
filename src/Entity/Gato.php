@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: GatoRepository::class)]
@@ -15,15 +16,19 @@ class Gato
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['list_gato', 'list_plano_alimentar', 'list_evento'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['list_gato', 'list_plano_alimentar', 'list_evento'])]
     private ?string $nome = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['list_gato'])]
     private ?\DateTimeInterface $aniversario = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Groups(['list_gato'])]
     private ?int $sexo = null;
 
     #[ORM\ManyToOne(inversedBy: 'gatos')]
@@ -36,7 +41,7 @@ class Gato
     private Collection $eventos;
 
     #[ORM\ManyToOne(inversedBy: 'gatos')]
-    #[Ignore]
+    #[Groups(['list_gato'])]
     private ?PlanoAlimentar $planoAlimentar = null;
 
     public function __construct()

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class GatoController extends AbstractController
@@ -33,7 +34,15 @@ class GatoController extends AbstractController
         foreach($gatos as $gato) {
             DateUtil::convertDateToGMT($gato->getAniversario());
         }
-        return $this->json($gatos);
+        $context = (new ObjectNormalizerContextBuilder)
+            ->withGroups('list_gato')
+            ->toArray();
+        return $this->json(
+            $gatos,
+            Response::HTTP_OK,
+            [],
+            $context
+        );
     }
 
     #[Route('/gato/{id}', name: 'find_gato', methods: ['GET'])]

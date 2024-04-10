@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class EventoController extends AbstractController
@@ -33,8 +34,14 @@ class EventoController extends AbstractController
         foreach($eventos as $evento) {
             DateUtil::convertDateToGMT($evento->getData());
         }
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups('list_evento')
+            ->toArray();
         return $this->json(
-            $eventos
+            $eventos,
+            Response::HTTP_OK,
+            [],
+            $context
         );
     }
 

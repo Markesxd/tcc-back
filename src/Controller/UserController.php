@@ -43,11 +43,11 @@ class UserController extends AbstractController
     {
         $user = $this->userService->getLoggedUser();
         $context = (new ObjectNormalizerContextBuilder())
-            ->withGroups('show')
+            ->withGroups('get_user')
             ->toArray();
         return $this->json(
             $user,
-            200,
+            Response::HTTP_OK,
             [],
             $context
         );

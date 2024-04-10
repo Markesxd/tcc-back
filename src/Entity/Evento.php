@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: EventoRepository::class)]
@@ -15,15 +16,19 @@ class Evento
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['list_evento'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['list_evento'])]
     private ?string $nome = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['list_evento'])]
     private ?\DateTimeInterface $data = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Groups(['list_evento'])]
     private ?int $intervaloDeRepeticao = null;
 
     #[ORM\ManyToOne(inversedBy: 'eventos')]
@@ -32,6 +37,7 @@ class Evento
     private ?User $usuario = null;
 
     #[ORM\ManyToMany(targetEntity: Gato::class, inversedBy: 'eventos')]
+    #[Groups(['list_evento'])]
     private Collection $gatos;
 
     public function __construct()

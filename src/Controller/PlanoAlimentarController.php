@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class PlanoAlimentarController extends AbstractController
@@ -30,8 +31,14 @@ class PlanoAlimentarController extends AbstractController
     public function list(): JsonResponse
     {
         $planosAlimentares = $this->planoAlimentarService->list();
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups('list_plano_alimentar')
+            ->toArray();
         return $this->json(
-            $planosAlimentares
+            $planosAlimentares,
+            Response::HTTP_OK,
+            [],
+            $context
         );
     }
 
@@ -69,7 +76,15 @@ class PlanoAlimentarController extends AbstractController
     {
         $planoAlimentar = $this->serializer->deserialize($request->getContent(), PlanoAlimentar::class, 'json');
         $planoAlimentar = $this->planoAlimentarService->update($planoAlimentar, $id);
-        return $this->json($planoAlimentar);
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups('list_plano_alimentar')
+            ->toArray();
+        return $this->json(
+            $planoAlimentar,
+            Response::HTTP_OK,
+            [],
+            $context
+        );
     }
 
     #[Route('/plano-alimentar/{id}', name: 'delete_plano_alimentar', methods: ['DELETE'])]

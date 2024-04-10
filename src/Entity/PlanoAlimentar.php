@@ -6,6 +6,7 @@ use App\Repository\PlanoAlimentarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: PlanoAlimentarRepository::class)]
@@ -14,9 +15,11 @@ class PlanoAlimentar
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['list_gato', 'list_plano_alimentar'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['list_gato', 'list_plano_alimentar'])]
     private ?string $nome = null;
 
     #[ORM\ManyToOne(inversedBy: 'planosAlimentares')]
@@ -25,9 +28,11 @@ class PlanoAlimentar
     private ?User $usuario = null;
 
     #[ORM\OneToMany(targetEntity: Gato::class, mappedBy: 'planoAlimentar')]
+    #[Groups(['list_plano_alimentar'])]
     private Collection $gatos;
 
     #[ORM\OneToMany(targetEntity: Refeicao::class, mappedBy: 'planoAlimentar', orphanRemoval: true, cascade: ['persist'])]
+    #[Groups(['list_plano_alimentar'])]
     private Collection $refeicoes;
 
     public function __construct()

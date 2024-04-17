@@ -65,8 +65,11 @@ class PlanoAlimentarService {
             $_planoAlimentar->setNome($planoAlimentar->getNome());
         }
         if(!$planoAlimentar->getGatos()->isEmpty()) {
-            $_planoAlimentar->getGatos()->clear();
+            foreach($_planoAlimentar->getGatos() as $_gato) {
+                $_planoAlimentar->removeGato($_gato);
+            }
             foreach($planoAlimentar->getGatos() as $gato) {
+                $_planoAlimentar->removeGato($gato);
                 $_gato = $this->entityManager->getRepository(Gato::class)->find($gato->getId());
                 $_planoAlimentar->addGato($_gato);
             }

@@ -48,24 +48,34 @@ class EventoController extends AbstractController
     #[Route('/evento', name: 'create_evento', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups('list_evento')
+            ->toArray();
         $evento = $this->serializer->deserialize($request->getContent(), Evento::class, 'json');
         $evento = $this->eventoService->create($evento);
 
         return $this->json(
             $evento,
             Response::HTTP_CREATED,
-            ['Location' => "/evento/{$evento->getId()}"]
+            ['Location' => "/evento/{$evento->getId()}"],
+            $context
         );
     }
 
     #[Route('evento/{id}', name: 'update_evento', methods: ['PUT'])]
     public function update(Request $request, int $id): JsonResponse
     {
-        $evento = $this->serializer->deserialize($request->getContent(), Evento::class, 'json');
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups('list_evento')
+            ->toArray();
+        $evento = $this->serializer->deserialize($request->getContent(), Evento::class, 'json', $context);
         $evento = $this->eventoService->update($evento, $id);
 
         return $this->json(
-            $evento
+            $evento,
+            Response::HTTP_OK,
+            [],
+            $context
         );
     }
 

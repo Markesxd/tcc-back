@@ -57,12 +57,16 @@ class GatoController extends AbstractController
     {
         $gato = $this->serializer->deserialize($request->getContent(), Gato::class, 'json');
         $this->gatoService->create($gato);
+        $context = (new ObjectNormalizerContextBuilder)
+            ->withGroups('list_gato')
+            ->toArray();
         return $this->json(
             $gato,
             Response::HTTP_CREATED,
             [
                 'Location' => "/gato/{$gato->getId()}" 
-            ]
+            ],
+            $context
         );
     }
 
@@ -71,7 +75,10 @@ class GatoController extends AbstractController
     {
         $gato = $this->serializer->deserialize($request->getContent(), Gato::class, 'json');
         $_gato = $this->gatoService->update($gato, $id);
-        return $this->json($_gato);
+        $context = (new ObjectNormalizerContextBuilder)
+            ->withGroups('list_gato')
+            ->toArray();
+        return $this->json($_gato, Response::HTTP_OK, [], $context);
     }
 
     #[Route('/gato/{id}', name: 'delete_gato', methods: ['DELETE'])]

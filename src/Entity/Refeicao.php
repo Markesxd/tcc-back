@@ -26,7 +26,7 @@ class Refeicao
     #[Ignore]
     private ?PlanoAlimentar $planoAlimentar = null;
 
-    #[ORM\OneToMany(targetEntity: RefeicaoLog::class, mappedBy: 'refeicao')]
+    #[ORM\OneToMany(targetEntity: RefeicaoLog::class, mappedBy: 'refeicao', orphanRemoval: true)]
     #[Ignore]
     private ?Collection $logs = null;
 

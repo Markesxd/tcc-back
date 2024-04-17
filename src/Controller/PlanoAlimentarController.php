@@ -74,11 +74,11 @@ class PlanoAlimentarController extends AbstractController
     #[Route('plano-alimentar/{id}', name: 'update_plano_alimentar', methods: ['PUT'])]
     public function update(Request $request, int $id): JsonResponse
     {
-        $planoAlimentar = $this->serializer->deserialize($request->getContent(), PlanoAlimentar::class, 'json');
-        $planoAlimentar = $this->planoAlimentarService->update($planoAlimentar, $id);
         $context = (new ObjectNormalizerContextBuilder())
             ->withGroups('list_plano_alimentar')
             ->toArray();
+        $planoAlimentar = $this->serializer->deserialize($request->getContent(), PlanoAlimentar::class, 'json', $context);
+        $planoAlimentar = $this->planoAlimentarService->update($planoAlimentar, $id);
         return $this->json(
             $planoAlimentar,
             Response::HTTP_OK,

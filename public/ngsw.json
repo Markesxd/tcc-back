@@ -1,0 +1,109 @@
+{
+  "configVersion": 1,
+  "timestamp": 1714067075521,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/common.js",
+        "/favicon.ico",
+        "/index.html",
+        "/main.js",
+        "/manifest.webmanifest",
+        "/polyfills.js",
+        "/runtime.js",
+        "/src_pages_cadastro_cadastro_component_ts.js",
+        "/src_pages_cats_cats_component_ts.js",
+        "/src_pages_food_food_component_ts.js",
+        "/src_pages_health_health_component_ts.js",
+        "/src_pages_login_login_component_ts.js",
+        "/src_pages_sandboxes_sandboxes_component_ts.js",
+        "/src_pages_user-page_user-page_component_ts.js",
+        "/styles.css",
+        "/vendor.js"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/cat-icon.svg",
+        "/assets/icon-192x192.png",
+        "/assets/icon-512x512.png",
+        "/assets/icon-simplified.webp",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/user-solid.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/cat-icon.svg": "ace7236c30f2317059a55c6bb304d1c37cb0af68",
+    "/assets/icon-192x192.png": "64f26bdbd8aebacb63841a0a84055f20c97533d7",
+    "/assets/icon-512x512.png": "6ecd1c576ea099cb63914ccc75914d1da9968844",
+    "/assets/icon-simplified.webp": "4d021a04e9b8ae19bda1a4e07b7547ccba847f2a",
+    "/assets/icons/icon-128x128.png": "2d2e1b9149b8f3ee84810a5ba0d8f05d13a47618",
+    "/assets/icons/icon-144x144.png": "3ef558410ab63e985eb13126edb109c856e3c360",
+    "/assets/icons/icon-152x152.png": "841454a2d9fd0d805dd8b25856c8f9eb50700215",
+    "/assets/icons/icon-192x192.png": "8ac342fdcb93eda98a0bc260c2cc0266c76a8195",
+    "/assets/icons/icon-384x384.png": "a091a10a15820eac67cf804f9498aee8e59db44b",
+    "/assets/icons/icon-512x512.png": "6ecd1c576ea099cb63914ccc75914d1da9968844",
+    "/assets/icons/icon-72x72.png": "010da77f9461a9ac95a7a1fe0157c6f46d836aeb",
+    "/assets/icons/icon-96x96.png": "508489a5c71e29948807f67e67dec71e16e6f63c",
+    "/assets/user-solid.svg": "e5d7477c5bf4128c6bcf39c1845913909d883114",
+    "/common.js": "e171f0f5ea00530c46323e133320b20a7968dbba",
+    "/favicon.ico": "64f26bdbd8aebacb63841a0a84055f20c97533d7",
+    "/index.html": "c56388d5868697b7b86c2cffea4ff88611813f15",
+    "/main.js": "2580f0c754f0c8cf68d6666dc368374168077109",
+    "/manifest.webmanifest": "25aa7c285871c92b55acf180c39600ddecad40f9",
+    "/polyfills.js": "8df1528e7d94273beb6ac870ab0afa5daff99949",
+    "/runtime.js": "cac9519f6c6aa01fcfe79aefa1a7530e118dc2fe",
+    "/src_pages_cadastro_cadastro_component_ts.js": "b64d937114f316e7f2afbb9b112802815d4aafde",
+    "/src_pages_cats_cats_component_ts.js": "e2abea6b09200bef2b56ddeb599b9c3851bdbc4d",
+    "/src_pages_food_food_component_ts.js": "da31455bd047a0278f04e3c57dafe3a81a7a3a9c",
+    "/src_pages_health_health_component_ts.js": "835e3b7f95ff41b06d83097abe384cd94ec1f429",
+    "/src_pages_login_login_component_ts.js": "e712482e5f2eb7d1fa8220c4ec3c6ef6f8111dac",
+    "/src_pages_sandboxes_sandboxes_component_ts.js": "22f7c27f994e976e9b5e8fef9950e435710c5208",
+    "/src_pages_user-page_user-page_component_ts.js": "06faf08980768cc8cbc2a344a3874799123080f5",
+    "/styles.css": "8cbba46a4432d2218279fced4d64b91eda6850cc",
+    "/vendor.js": "842fcc206dae48a975725d9f70f4bf6e86810929"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
